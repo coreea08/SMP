@@ -1,0 +1,141 @@
+<!--<h1>Hello, world!</h1>
+<p>Welcome to your new single-page application, built with:</p>
+<ul>
+    <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
+    <li><a href='https://angular.io/'>Angular</a> and <a href='http://www.typescriptlang.org/'>TypeScript</a> for client-side code</li>
+    <li><a href='https://webpack.github.io/'>Webpack</a> for building and bundling client-side resources</li>
+    <li><a href='http://getbootstrap.com/'>Bootstrap</a> for layout and styling</li>
+</ul>
+<p>To help you get started, we've also set up:</p>
+<ul>
+    <li><strong>Client-side navigation</strong>. For example, click <em>Counter</em> then <em>Back</em> to return here.</li>
+    <li><strong>Server-side prerendering</strong>. For faster initial loading and improved SEO, your Angular app is prerendered on the server. The resulting HTML is then transferred to the browser where a client-side copy of the app takes over.</li>
+    <li><strong>Webpack dev middleware</strong>. In development mode, there's no need to run the <code>webpack</code> build tool. Your client-side resources are dynamically built on demand. Updates are available as soon as you modify any file.</li>
+    <li><strong>Hot module replacement</strong>. In development mode, you don't even need to reload the page after making most changes. Within seconds of saving changes to files, your Angular app will be rebuilt and a new instance injected is into the page.</li>
+    <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and the <code>webpack</code> build tool produces minified static CSS and JavaScript files.</li>
+</ul>-->
+
+
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <div class="header-icon">
+                    <i class="fa fa-dashboard"></i>
+                </div>
+                <div class="header-title">
+                    <h1>CRM Admin Dashboard</h1>
+                    <small>Very detailed & featured admin.</small>
+                </div>
+            </section>
+            <!-- Main content -->
+            <section class="content">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+                        <div id="cardbox1">
+                            <div class="statistic-box">
+                                <i class="fa fa-user-plus fa-3x"></i>
+                                <div class="counter-number pull-right">
+                                    <span class="count-number">11</span>
+                                    <span class="slight">
+                                        <i class="fa fa-play fa-rotate-270"> </i>
+                                    </span>
+                                </div>
+                                <h3> Active Client</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+                        <div id="cardbox2">
+                            <div class="statistic-box">
+                                <i class="fa fa-user-secret fa-3x"></i>
+                                <div class="counter-number pull-right">
+                                    <span class="count-number">4</span>
+                                    <span class="slight">
+                                        <i class="fa fa-play fa-rotate-270"> </i>
+                                    </span>
+                                </div>
+                                <h3>  Active Admin</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+                        <div id="cardbox3">
+                            <div class="statistic-box">
+                                <i class="fa fa-money fa-3x"></i>
+                                <div class="counter-number pull-right">
+                                    <i class="ti ti-money"></i><span class="count-number">965</span>
+                                    <span class="slight">
+                                        <i class="fa fa-play fa-rotate-270"> </i>
+                                    </span>
+                                </div>
+                                <h3>  Total Expenses</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+                        <div id="cardbox4">
+                            <div class="statistic-box">
+                                <i class="fa fa-files-o fa-3x"></i>
+                                <div class="counter-number pull-right">
+                                    <span class="count-number">11</span>
+                                    <span class="slight">
+                                        <i class="fa fa-play fa-rotate-270"> </i>
+                                    </span>
+                                </div>
+                                <h3> Running Projects</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <!-- Barchart -->
+                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                        <div class="panel panel-bd lobidisable">
+                            <div class="panel-heading">
+                                <div class="panel-title">
+                                    <h4>This Year Earnings & Expenses(Bar chart)</h4>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <canvas id="barChart" height="150"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- bar chart -->
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                        <div class="panel panel-bd lobidisable">
+                            <div class="panel-heading">
+                                <div class="panel-title">
+                                    <h4>Weekly Earnings & Expenses</h4>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <canvas id="singelBarChart" height="323"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+                <div class="row">
+                    <div class="col-xs-12 col-sm-8">
+                        <div class="panel panel-bd lobidrag">
+                            <div class="panel-heading">
+                                <div class="panel-title">
+                                    <h4>Google Map</h4>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="google-maps">
+                                    <iframe src="https://maps.google.co.uk/maps?f=q&source=s_q&hl=en&geocode=&q=15+Springfield+Way,+Hythe,+CT21+5SH&aq=t&sll=52.8382,-2.327815&sspn=8.047465,13.666992&ie=UTF8&hq=&hnear=15+Springfield+Way,+Hythe+CT21+5SH,+United+Kingdom&t=m&z=14&ll=51.077429,1.121722&output=embed"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+   
+
