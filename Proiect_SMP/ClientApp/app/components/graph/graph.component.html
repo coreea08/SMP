@@ -1,8 +1,20 @@
 <div class="content-wrapper">
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="header-icon">
+            <i class="fa fa-line-chart"></i>
+        </div>
+        <div class="header-title">
+            <h1>Measurement per year</h1>
+            <small></small>
+        </div>
+    </section>
+
     <section class="content">
         <div class="row">
             <div class="col-md-6">
-                <div style="display: block">
+                <div style="display: block" *ngIf="lineChartData.length > 0">
                     <canvas baseChart width="400" height="400"
                             [datasets]="lineChartData"
                             [labels]="lineChartLabels"
@@ -26,5 +38,5 @@
                 <button (click)="randomize()">CLICK</button>
             </div>
         </div>
-        </section>
-    </div>
+    </section>
+</div>

@@ -12,7 +12,7 @@ import { CounterComponent } from './components/counter/counter.component';
 import { GraphComponent } from './components/graph/graph.component';
 
 import { ChartsModule } from 'ng2-charts/ng2-charts';
-import { AaaComponent } from './components/aaa/aaa.component';
+import { DataService } from './services/data.service';
 
 @NgModule({
     declarations: [
@@ -22,7 +22,6 @@ import { AaaComponent } from './components/aaa/aaa.component';
         FetchDataComponent,
         HomeComponent,
         GraphComponent,
-        AaaComponent,
 
     ],
     imports: [
@@ -36,9 +35,12 @@ import { AaaComponent } from './components/aaa/aaa.component';
             { path: 'counter', component: CounterComponent },
             { path: 'fetch-data', component: FetchDataComponent },
       
-            { path: 'aaa', component: GraphComponent },
+            { path: 'graph', component: GraphComponent },
             { path: '**', redirectTo: 'home' },
         ])
+    ],
+    providers: [
+        DataService,
     ]
 })
 export class AppModuleShared {
