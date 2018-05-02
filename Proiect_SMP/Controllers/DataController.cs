@@ -131,6 +131,7 @@ namespace Proiect_SMP.Controllers
 
                 return date;
             }
+
         }
 
         [HttpGet("/api/DateTime")]
@@ -153,6 +154,282 @@ namespace Proiect_SMP.Controllers
                 return date;
             }
         }
+
+        [HttpGet("/api/Gaz1/{startDate}/{endDate}")]
+        public List<double> GetGaz1Specific(DateTime startDate, DateTime endDate)
+        {
+            this.conn.Open();
+            SqlCommand cmd = new SqlCommand("SELECT Gaz1 FROM Masuratori where Data between @startDate and @endDate order by data", conn);
+            cmd.Parameters.AddWithValue("@startDate", startDate);
+            cmd.Parameters.AddWithValue("@endDate", endDate);
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                List<double> date = new List<double>();
+
+                while (reader.Read())
+                {
+                    //Data p = new Data(reader, conn);
+                    date.Add(Math.Round(reader.GetDouble(0), 4));
+                }
+
+                return date;
+            }
+        }
+
+        [HttpGet("/api/Gaz2/{startDate}/{endDate}")]
+        public List<double> GetGaz2Specific(DateTime startDate, DateTime endDate)
+        {
+            this.conn.Open();
+            SqlCommand cmd = new SqlCommand("SELECT Gaz2 FROM Masuratori where Data between @startDate and @endDate order by data", conn);
+            cmd.Parameters.AddWithValue("@startDate", startDate);
+            cmd.Parameters.AddWithValue("@endDate", endDate);
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                List<double> date = new List<double>();
+
+                while (reader.Read())
+                {
+                    //Data p = new Data(reader, conn);
+                    date.Add(Math.Round(reader.GetDouble(0), 4));
+                }
+
+                return date;
+            }
+        }
+
+        [HttpGet("/api/Gaz3/{startDate}/{endDate}")]
+        public List<double> GetGaz3Specific(DateTime startDate, DateTime endDate)
+        {
+            this.conn.Open();
+            SqlCommand cmd = new SqlCommand("SELECT Gaz3 FROM Masuratori where Data between @startDate and @endDate order by data", conn);
+            cmd.Parameters.AddWithValue("@startDate", startDate);
+            cmd.Parameters.AddWithValue("@endDate", endDate);
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                List<double> date = new List<double>();
+
+                while (reader.Read())
+                {
+                    //Data p = new Data(reader, conn);
+                    date.Add(Math.Round(reader.GetDouble(0), 4));
+                }
+
+                return date;
+            }
+        }
+
+        [HttpGet("/api/DateTime/{startDate}/{endDate}")]
+        public List<string> GetSpecifiedDateTime(DateTime startDate, DateTime endDate)
+        {
+            this.conn.Open();
+            SqlCommand cmd = new SqlCommand("SELECT Data FROM Masuratori where Data between @startDate and @endDate order by Data", conn);
+            cmd.Parameters.AddWithValue("@startDate", startDate);
+            cmd.Parameters.AddWithValue("@endDate", endDate);
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                List<string> date = new List<string>();
+
+                while (reader.Read())
+                {
+                    //Data p = new Data(reader, conn);
+                    date.Add(reader.GetDateTime(0).Date.ToShortDateString());
+                }
+
+                return date;
+            }
+        }
+
+
+        [HttpGet("/api/Gaz1H")]
+        public List<double> GetGaz1Day()
+        {
+            this.conn.Open();
+
+            SqlCommand cmd = new SqlCommand("SELECT Gaz1 FROM Masuratori where Data = @thisDay order by data", conn);
+            var time = DateTime.Now.ToShortDateString();
+            cmd.Parameters.AddWithValue("@thisDay", time);
+
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                List<double> date = new List<double>();
+
+                while (reader.Read())
+                {
+                    //Data p = new Data(reader, conn);
+                    date.Add(Math.Round(reader.GetDouble(0), 4));
+                }
+
+                return date;
+            }
+        }
+
+        [HttpGet("/api/Gaz2H")]
+        public List<double> GetGaz2Day()
+        {
+            this.conn.Open();
+
+            SqlCommand cmd = new SqlCommand("SELECT Gaz2 FROM Masuratori where Data = @thisDay order by data", conn);
+            cmd.Parameters.AddWithValue("@thisDay", DateTime.Now.ToShortDateString());
+
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                List<double> date = new List<double>();
+
+                while (reader.Read())
+                {
+                    //Data p = new Data(reader, conn);
+                    date.Add(Math.Round(reader.GetDouble(0), 4));
+                }
+
+                return date;
+            }
+        }
+
+        [HttpGet("/api/Gaz3H")]
+        public List<double> GetGaz3Day()
+        {
+            this.conn.Open();
+
+            SqlCommand cmd = new SqlCommand("SELECT Gaz3 FROM Masuratori where Data = @thisDay order by data", conn);
+            cmd.Parameters.AddWithValue("@thisDay", DateTime.Now.ToShortDateString());
+
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                List<double> date = new List<double>();
+
+                while (reader.Read())
+                {
+                    //Data p = new Data(reader, conn);
+                    date.Add(Math.Round(reader.GetDouble(0), 4));
+                }
+
+                return date;
+            }
+        }
+
+
+        [HttpGet("/api/DateTimeH")]
+        public List<string> GetDateTimeHour()
+        {
+            this.conn.Open();
+            SqlCommand cmd = new SqlCommand("SELECT Data FROM Masuratori where Data = @thisDay order by Data", conn);
+            cmd.Parameters.AddWithValue("@thisDay", DateTime.Now.ToShortDateString());
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                List<string> date = new List<string>();
+
+                while (reader.Read())
+                {
+
+                        date.Add(reader.GetDateTime(0).Hour.ToString());
+                }
+
+                return date;
+            }
+        }
+
+        [HttpGet("/api/Gaz1H/{startHour}/{endHour}")]
+        public List<double> GetGaz1Day(DateTime startHour, DateTime endHour)
+        {
+            this.conn.Open();
+
+            SqlCommand cmd = new SqlCommand("SELECT Gaz1,Data  FROM Masuratori where Data = @thisDay order by data", conn);
+            cmd.Parameters.AddWithValue("@thisDay", DateTime.Now.ToShortDateString());
+
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                List<double> date = new List<double>();
+
+                while (reader.Read())
+                {
+                    //Data p = new Data(reader, conn);
+                    if(reader.GetDateTime(1).Hour > startHour.Hour && reader.GetDateTime(1).Hour < endHour.Hour)
+                        date.Add(Math.Round(reader.GetDouble(0), 4));
+                }
+
+                return date;
+            }
+        }
+
+        [HttpGet("/api/Gaz2H/{startHour}/{endHour}")]
+        public List<double> GetGaz2Day(DateTime startHour, DateTime endHour)
+        {
+            this.conn.Open();
+
+            SqlCommand cmd = new SqlCommand("SELECT Gaz2,Data  FROM Masuratori where Data = @thisDay order by data", conn);
+            cmd.Parameters.AddWithValue("@thisDay", DateTime.Now.ToShortDateString());
+
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                List<double> date = new List<double>();
+
+                while (reader.Read())
+                {
+                    //Data p = new Data(reader, conn);
+                    if (reader.GetDateTime(1).Hour > startHour.Hour && reader.GetDateTime(1).Hour < endHour.Hour)
+                        date.Add(Math.Round(reader.GetDouble(0), 4));
+                }
+
+                return date;
+            }
+        }
+
+        [HttpGet("/api/Gaz3H/{startHour}/{endHour}")]
+        public List<double> GetGaz3Day(DateTime startHour, DateTime endHour)
+        {
+            this.conn.Open();
+
+            SqlCommand cmd = new SqlCommand("SELECT Gaz3,Data  FROM Masuratori where Data = @thisDay order by data", conn);
+            cmd.Parameters.AddWithValue("@thisDay", DateTime.Now.ToShortDateString());
+
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                List<double> date = new List<double>();
+
+                while (reader.Read())
+                {
+                    //Data p = new Data(reader, conn);
+                    if (reader.GetDateTime(1).Hour > startHour.Hour && reader.GetDateTime(1).Hour < endHour.Hour)
+                        date.Add(Math.Round(reader.GetDouble(0), 4));
+                }
+
+                return date;
+            }
+        }
+
+
+        [HttpGet("/api/DateTimeH/{startHour}/{endHour}")]
+        public List<string> GetDateTimeHour(DateTime startHour, DateTime endHour)
+        {
+            this.conn.Open();
+            SqlCommand cmd = new SqlCommand("SELECT Data FROM Masuratori where Data = @thisDay order by Data", conn);
+            cmd.Parameters.AddWithValue("@thisDay", DateTime.Now.ToShortDateString());
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                List<string> date = new List<string>();
+
+                while (reader.Read())
+                {
+                    if (reader.GetDateTime(0).Hour > startHour.Hour && reader.GetDateTime(0).Hour < endHour.Hour)
+                        date.Add(reader.GetDateTime(0).Hour.ToString());
+                }
+
+                return date;
+            }
+        }
+
 
         [HttpPost("/api/Data")]
         public IActionResult CreateData([FromBody] Data d)

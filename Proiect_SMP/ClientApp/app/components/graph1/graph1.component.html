@@ -6,7 +6,7 @@
             <i class="fa fa-line-chart"></i>
         </div>
         <div class="header-title">
-            <h1>Measurement per year</h1>
+            <h1>Measurement per day</h1>
             <small></small>
         </div>
     </section>
@@ -41,23 +41,15 @@
             </div>
             <div class="col-md-4" style="margin-bottom: 10px">
                 <div class="form-group has-warning">
-                    <label for="sdata"> Start Date </label>
-                    <input type="date" id="sdata" name="sdata" class="form-control" [(ngModel)]="startDate" #sdata="ngModel">
+                    <label for="sdata"> Start Time </label>
+                    <input type="time" id="sdata" name="sdata" class="form-control" [(ngModel)]="startDate" #sdata="ngModel">
                 </div>
 
                 <div class="form-group has-warning">
-                    <label for="edata"> End Date </label>
-                    <input type="date" id="edata" name="edata" class="form-control" [(ngModel)]="endDate" #edata="ngModel">
+                    <label for="edata"> End Time </label>
+                    <input type="time" id="edata" name="edata" class="form-control" [(ngModel)]="endDate" #edata="ngModel">
                 </div>
-                <!--<table class="table table-responsive table-condensed">
-            <tr>
-                <th *ngFor="let label of lineChartLabels">{{label}}</th>
-            </tr>
-            <tr *ngFor="let d of lineChartData">
-                <td *ngFor="let label of lineChartLabels; let j=index">{{d && d.data[j]}}</td>
-            </tr>
-        </table>
-        <button (click)="randomize()">CLICK</button>-->
+
                 <button class="btn-primary" (click)="show()">Refresh Mesurements</button>
             </div>
         </div>

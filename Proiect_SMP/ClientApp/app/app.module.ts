@@ -13,6 +13,7 @@ import { GraphComponent } from './components/graph/graph.component';
 
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { DataService } from './services/data.service';
+import { Graph1Component } from './components/graph1/graph1.component';
 
 @NgModule({
     declarations: [
@@ -22,6 +23,7 @@ import { DataService } from './services/data.service';
         FetchDataComponent,
         HomeComponent,
         GraphComponent,
+        Graph1Component,
 
     ],
     imports: [
@@ -36,6 +38,7 @@ import { DataService } from './services/data.service';
             { path: 'fetch-data', component: FetchDataComponent },
       
             { path: 'graph', component: GraphComponent },
+            { path: 'graph1', component: Graph1Component },
             { path: '**', redirectTo: 'home' },
         ])
     ],

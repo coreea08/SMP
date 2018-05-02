@@ -3,11 +3,11 @@ import { DataService } from '../../services/data.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'graph',
-  templateUrl: './graph.component.html',
-  styleUrls: ['./graph.component.css']
+  selector: 'app-graph1',
+  templateUrl: './graph1.component.html',
+  styleUrls: ['./graph1.component.css']
 })
-export class GraphComponent implements OnInit {
+export class Graph1Component implements OnInit {
 
     gaz1: any[]
     gaz2: any[]
@@ -20,17 +20,17 @@ export class GraphComponent implements OnInit {
 
     constructor(private dataService: DataService, private route: ActivatedRoute,
         private router: Router) {
-        
+
     }
 
     ngOnInit() {
-        this.dataService.getGaz1().subscribe(x => {
+        this.dataService.getGaz1Ho().subscribe(x => {
             this.gaz1 = x;
-            this.dataService.getGaz2().subscribe(x1 => {
+            this.dataService.getGaz2Ho().subscribe(x1 => {
                 this.gaz2 = x1;
-                this.dataService.getGaz3().subscribe(x => {
+                this.dataService.getGaz3Ho().subscribe(x => {
                     this.gaz3 = x;
-                    this.dataService.getDateTime().subscribe(x => {
+                    this.dataService.getDateTimeHo().subscribe(x => {
                         this.date = x;
 
                         this.lineChartData.push({ data: this.gaz1, label: 'O2' });
@@ -38,7 +38,7 @@ export class GraphComponent implements OnInit {
                         this.lineChartData.push({ data: this.gaz3, label: 'CO2' });
                         this.lineChartLabels = this.date;
                         console.log(this.date)
-                            
+
                     });
                 });
             });
@@ -51,18 +51,13 @@ export class GraphComponent implements OnInit {
     public lineChartData: Array<any> = [];
     public lineChartData2: Array<any> = [];
 
-    //public lineChartData: Array<any> = [
-    //    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Oxygen' },
-    //    { data: [28, 48, 40, 19, 86, 27, 90], label: 'CO' },
-    //    { data: [18, 48, 77, 9, 100, 27, 40], label: 'CO2' }
-    //];
-
     public lineChartLabels: Array<any> = [];
     public lineChartLabels2: Array<any> = [];
-    //public lineChartLabels: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+
     public lineChartOptions: any = {
         responsive: true
     };
+
     public lineChartColors: Array<any> = [
         { // red
             backgroundColor: 'rgba(0,128,0,0.5)',
@@ -92,17 +87,6 @@ export class GraphComponent implements OnInit {
     public lineChartLegend: boolean = true;
     public lineChartType: string = 'line';
 
-    public randomize(): void {
-        let _lineChartData: Array<any> = new Array(this.lineChartData.length);
-        for (let i = 0; i < this.lineChartData.length; i++) {
-            _lineChartData[i] = { data: new Array(this.lineChartData[i].data.length), label: this.lineChartData[i].label };
-            for (let j = 0; j < this.lineChartData[i].data.length; j++) {
-                _lineChartData[i].data[j] = Math.floor((Math.random() * 100) + 1);
-            }
-        }
-        this.lineChartData = _lineChartData;
-    }
-
     // events
     public chartClicked(e: any): void {
         console.log(e);
@@ -115,8 +99,6 @@ export class GraphComponent implements OnInit {
     show() {
         if (this.startDate == "" && this.endDate == "")
             this.bool = false;
-  //      console.log(this.startDate);
-//        console.log(this.endDate);
 
         if (this.startDate == undefined || (this.startDate == "" && this.endDate != ""))
             this.startDate = new Date().toISOString().slice(0, 10);
@@ -133,13 +115,13 @@ export class GraphComponent implements OnInit {
             this.endDate = a;
         }
 
-        this.dataService.getGaz1Specific(this.startDate, this.endDate).subscribe(x => {
+        this.dataService.getGaz1H(this.startDate, this.endDate).subscribe(x => {
             this.gaz1 = x;
-            this.dataService.getGaz2Specific(this.startDate, this.endDate).subscribe(x1 => {
+            this.dataService.getGaz2H(this.startDate, this.endDate).subscribe(x1 => {
                 this.gaz2 = x1;
-                this.dataService.getGaz3Specific(this.startDate, this.endDate).subscribe(x2 => {
+                this.dataService.getGaz3H(this.startDate, this.endDate).subscribe(x2 => {
                     this.gaz3 = x2;
-                    this.dataService.getDateTimeSpecific(this.startDate, this.endDate).subscribe(x3 => {
+                    this.dataService.getDateTimeH(this.startDate, this.endDate).subscribe(x3 => {
                         this.lineChartData2 = [];
                         this.lineChartLabels2 = [];
                         this.lineChartData2.push({ data: this.gaz1, label: 'O2' });
