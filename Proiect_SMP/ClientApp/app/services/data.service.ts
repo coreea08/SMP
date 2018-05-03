@@ -60,18 +60,18 @@ export class DataService {
     }
 
     // for get per day
-    getGaz1H(startHour: any, endHour: any) {
-        return this.http.get('/api/Gaz1H/' + startHour + '/' + endHour).map(res => res.json());
+    getGaz1H(startHour: any, endHour: any, sDay: any) {
+        return this.http.get('/api/Gaz1H/' + startHour + '/' + endHour + '/' + sDay).map(res => res.json());
     }
-    getGaz2H(startHour: any, endHour: any) {
-        return this.http.get('/api/Gaz2H/' + startHour + '/' + endHour).map(res => res.json());
+    getGaz2H(startHour: any, endHour: any, sDay: any) {
+        return this.http.get('/api/Gaz2H/' + startHour + '/' + endHour + '/' + sDay).map(res => res.json());
     }
-    getGaz3H(startHour: any, endHour: any) {
-        return this.http.get('/api/Gaz3H/' + startHour + '/' + endHour).map(res => res.json());
+    getGaz3H(startHour: any, endHour: any, sDay: any) {
+        return this.http.get('/api/Gaz3H/' + startHour + '/' + endHour + '/' + sDay).map(res => res.json());
     }
 
-    getDateTimeH(startHour: any, endHour: any) {
-        return this.http.get('/api/DateTimeH/' + startHour + '/' + endHour).map(res => res.json());
+    getDateTimeH(startHour: any, endHour: any, sDay: any) {
+        return this.http.get('/api/DateTimeH/' + startHour + '/' + endHour + '/' + sDay).map(res => res.json());
     }
 
 

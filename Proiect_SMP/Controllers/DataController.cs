@@ -74,7 +74,7 @@ namespace Proiect_SMP.Controllers
         public List<double> GetGaz1()
         {
             this.conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT Gaz1 FROM Masuratori order by data", conn);
+            SqlCommand cmd = new SqlCommand("SELECT Gaz1 FROM Masuratori order by data,ora", conn);
             
 
             using (SqlDataReader reader = cmd.ExecuteReader())
@@ -95,7 +95,7 @@ namespace Proiect_SMP.Controllers
         public List<double> GetGaz2()
         {
             this.conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT Gaz2 FROM Masuratori order by data", conn);
+            SqlCommand cmd = new SqlCommand("SELECT Gaz2 FROM Masuratori order by data,ora", conn);
 
 
             using (SqlDataReader reader = cmd.ExecuteReader())
@@ -116,7 +116,7 @@ namespace Proiect_SMP.Controllers
         public List<double> GetGaz3()
         {
             this.conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT Gaz3 FROM Masuratori order by data", conn);
+            SqlCommand cmd = new SqlCommand("SELECT Gaz3 FROM Masuratori order by data,ora", conn);
 
 
             using (SqlDataReader reader = cmd.ExecuteReader())
@@ -138,7 +138,7 @@ namespace Proiect_SMP.Controllers
         public List<string> GetDateTime()
         {
             this.conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT Data FROM Masuratori order by Data", conn);
+            SqlCommand cmd = new SqlCommand("SELECT Data FROM Masuratori order by Data,ora", conn);
 
 
             using (SqlDataReader reader = cmd.ExecuteReader())
@@ -156,10 +156,10 @@ namespace Proiect_SMP.Controllers
         }
 
         [HttpGet("/api/Gaz1/{startDate}/{endDate}")]
-        public List<double> GetGaz1Specific(DateTime startDate, DateTime endDate)
+        public List<double> GetGaz1Specific(string startDate, string endDate)
         {
             this.conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT Gaz1 FROM Masuratori where Data between @startDate and @endDate order by data", conn);
+            SqlCommand cmd = new SqlCommand("SELECT Gaz1 FROM Masuratori where Data between @startDate and @endDate order by data,ora", conn);
             cmd.Parameters.AddWithValue("@startDate", startDate);
             cmd.Parameters.AddWithValue("@endDate", endDate);
 
@@ -178,10 +178,10 @@ namespace Proiect_SMP.Controllers
         }
 
         [HttpGet("/api/Gaz2/{startDate}/{endDate}")]
-        public List<double> GetGaz2Specific(DateTime startDate, DateTime endDate)
+        public List<double> GetGaz2Specific(string startDate, string endDate)
         {
             this.conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT Gaz2 FROM Masuratori where Data between @startDate and @endDate order by data", conn);
+            SqlCommand cmd = new SqlCommand("SELECT Gaz2 FROM Masuratori where Data between @startDate and @endDate order by data,ora", conn);
             cmd.Parameters.AddWithValue("@startDate", startDate);
             cmd.Parameters.AddWithValue("@endDate", endDate);
 
@@ -200,10 +200,10 @@ namespace Proiect_SMP.Controllers
         }
 
         [HttpGet("/api/Gaz3/{startDate}/{endDate}")]
-        public List<double> GetGaz3Specific(DateTime startDate, DateTime endDate)
+        public List<double> GetGaz3Specific(string startDate, string endDate)
         {
             this.conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT Gaz3 FROM Masuratori where Data between @startDate and @endDate order by data", conn);
+            SqlCommand cmd = new SqlCommand("SELECT Gaz3 FROM Masuratori where Data between @startDate and @endDate order by data,ora", conn);
             cmd.Parameters.AddWithValue("@startDate", startDate);
             cmd.Parameters.AddWithValue("@endDate", endDate);
 
@@ -222,10 +222,10 @@ namespace Proiect_SMP.Controllers
         }
 
         [HttpGet("/api/DateTime/{startDate}/{endDate}")]
-        public List<string> GetSpecifiedDateTime(DateTime startDate, DateTime endDate)
+        public List<string> GetSpecifiedDateTime(string startDate, string endDate)
         {
             this.conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT Data FROM Masuratori where Data between @startDate and @endDate order by Data", conn);
+            SqlCommand cmd = new SqlCommand("SELECT Data FROM Masuratori where Data between @startDate and @endDate order by Data,ora", conn);
             cmd.Parameters.AddWithValue("@startDate", startDate);
             cmd.Parameters.AddWithValue("@endDate", endDate);
 
@@ -249,7 +249,7 @@ namespace Proiect_SMP.Controllers
         {
             this.conn.Open();
 
-            SqlCommand cmd = new SqlCommand("SELECT Gaz1 FROM Masuratori where Data = @thisDay order by data", conn);
+            SqlCommand cmd = new SqlCommand("SELECT Gaz1 FROM Masuratori where Data = Convert(date, @thisDay,105) order by data", conn);
             var time = DateTime.Now.ToShortDateString();
             cmd.Parameters.AddWithValue("@thisDay", time);
 
@@ -273,7 +273,7 @@ namespace Proiect_SMP.Controllers
         {
             this.conn.Open();
 
-            SqlCommand cmd = new SqlCommand("SELECT Gaz2 FROM Masuratori where Data = @thisDay order by data", conn);
+            SqlCommand cmd = new SqlCommand("SELECT Gaz2 FROM Masuratori where Data = Convert(date, @thisDay,105) order by data", conn);
             cmd.Parameters.AddWithValue("@thisDay", DateTime.Now.ToShortDateString());
 
 
@@ -296,7 +296,7 @@ namespace Proiect_SMP.Controllers
         {
             this.conn.Open();
 
-            SqlCommand cmd = new SqlCommand("SELECT Gaz3 FROM Masuratori where Data = @thisDay order by data", conn);
+            SqlCommand cmd = new SqlCommand("SELECT Gaz3 FROM Masuratori where Data = Convert(date, @thisDay,105) order by data", conn);
             cmd.Parameters.AddWithValue("@thisDay", DateTime.Now.ToShortDateString());
 
 
@@ -319,7 +319,7 @@ namespace Proiect_SMP.Controllers
         public List<string> GetDateTimeHour()
         {
             this.conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT Data FROM Masuratori where Data = @thisDay order by Data", conn);
+            SqlCommand cmd = new SqlCommand("SELECT CONVERT(varchar(15),CAST(Ora AS TIME),100) FROM Masuratori where Data = Convert(date, @thisDay,105) order by ora", conn);
             cmd.Parameters.AddWithValue("@thisDay", DateTime.Now.ToShortDateString());
 
             using (SqlDataReader reader = cmd.ExecuteReader())
@@ -329,21 +329,23 @@ namespace Proiect_SMP.Controllers
                 while (reader.Read())
                 {
 
-                        date.Add(reader.GetDateTime(0).Hour.ToString());
+                 // date.Add(reader.GetTimeSpan(0).ToString());
+                    date.Add(reader.GetString(0));
                 }
 
                 return date;
             }
         }
 
-        [HttpGet("/api/Gaz1H/{startHour}/{endHour}")]
-        public List<double> GetGaz1Day(DateTime startHour, DateTime endHour)
+        [HttpGet("/api/Gaz1H/{startHour}/{endHour}/{sDay}")]
+        public List<double> GetGaz1Day(string startHour, string endHour, string sDay)
         {
             this.conn.Open();
 
-            SqlCommand cmd = new SqlCommand("SELECT Gaz1,Data  FROM Masuratori where Data = @thisDay order by data", conn);
-            cmd.Parameters.AddWithValue("@thisDay", DateTime.Now.ToShortDateString());
-
+            SqlCommand cmd = new SqlCommand("SELECT Gaz1  FROM Masuratori where Data = @thisDay and (Ora between @start and @end) order by data", conn);
+            cmd.Parameters.AddWithValue("@thisDay", sDay);
+            cmd.Parameters.AddWithValue("@start", startHour);
+            cmd.Parameters.AddWithValue("@end", endHour);
 
             using (SqlDataReader reader = cmd.ExecuteReader())
             {
@@ -352,7 +354,7 @@ namespace Proiect_SMP.Controllers
                 while (reader.Read())
                 {
                     //Data p = new Data(reader, conn);
-                    if(reader.GetDateTime(1).Hour > startHour.Hour && reader.GetDateTime(1).Hour < endHour.Hour)
+                  //  if(reader.GetDateTime(1).Hour > startHour.Hour && reader.GetDateTime(1).Hour < endHour.Hour)
                         date.Add(Math.Round(reader.GetDouble(0), 4));
                 }
 
@@ -360,14 +362,15 @@ namespace Proiect_SMP.Controllers
             }
         }
 
-        [HttpGet("/api/Gaz2H/{startHour}/{endHour}")]
-        public List<double> GetGaz2Day(DateTime startHour, DateTime endHour)
+        [HttpGet("/api/Gaz2H/{startHour}/{endHour}/{sDay}")]
+        public List<double> GetGaz2Day(string startHour, string endHour,string sDay)
         {
             this.conn.Open();
 
-            SqlCommand cmd = new SqlCommand("SELECT Gaz2,Data  FROM Masuratori where Data = @thisDay order by data", conn);
-            cmd.Parameters.AddWithValue("@thisDay", DateTime.Now.ToShortDateString());
-
+            SqlCommand cmd = new SqlCommand("SELECT Gaz2  FROM Masuratori where Data = @thisDay and (Ora between @start and @end) order by data", conn);
+            cmd.Parameters.AddWithValue("@thisDay", sDay);
+            cmd.Parameters.AddWithValue("@start", startHour);
+            cmd.Parameters.AddWithValue("@end", endHour);
 
             using (SqlDataReader reader = cmd.ExecuteReader())
             {
@@ -376,7 +379,7 @@ namespace Proiect_SMP.Controllers
                 while (reader.Read())
                 {
                     //Data p = new Data(reader, conn);
-                    if (reader.GetDateTime(1).Hour > startHour.Hour && reader.GetDateTime(1).Hour < endHour.Hour)
+                  //  if (reader.GetDateTime(1).Hour > startHour.Hour && reader.GetDateTime(1).Hour < endHour.Hour)
                         date.Add(Math.Round(reader.GetDouble(0), 4));
                 }
 
@@ -384,14 +387,15 @@ namespace Proiect_SMP.Controllers
             }
         }
 
-        [HttpGet("/api/Gaz3H/{startHour}/{endHour}")]
-        public List<double> GetGaz3Day(DateTime startHour, DateTime endHour)
+        [HttpGet("/api/Gaz3H/{startHour}/{endHour}/{sDay}")]
+        public List<double> GetGaz3Day(string startHour, string endHour,string sDay)
         {
             this.conn.Open();
 
-            SqlCommand cmd = new SqlCommand("SELECT Gaz3,Data  FROM Masuratori where Data = @thisDay order by data", conn);
-            cmd.Parameters.AddWithValue("@thisDay", DateTime.Now.ToShortDateString());
-
+            SqlCommand cmd = new SqlCommand("SELECT Gaz3 FROM Masuratori where Data = @thisDay and (Ora between @start and @end) order by data", conn);
+            cmd.Parameters.AddWithValue("@thisDay", sDay);
+            cmd.Parameters.AddWithValue("@start", startHour);
+            cmd.Parameters.AddWithValue("@end", endHour);
 
             using (SqlDataReader reader = cmd.ExecuteReader())
             {
@@ -400,7 +404,7 @@ namespace Proiect_SMP.Controllers
                 while (reader.Read())
                 {
                     //Data p = new Data(reader, conn);
-                    if (reader.GetDateTime(1).Hour > startHour.Hour && reader.GetDateTime(1).Hour < endHour.Hour)
+                 //   if (reader.GetDateTime(1).Hour > startHour.Hour && reader.GetDateTime(1).Hour < endHour.Hour)
                         date.Add(Math.Round(reader.GetDouble(0), 4));
                 }
 
@@ -409,12 +413,15 @@ namespace Proiect_SMP.Controllers
         }
 
 
-        [HttpGet("/api/DateTimeH/{startHour}/{endHour}")]
-        public List<string> GetDateTimeHour(DateTime startHour, DateTime endHour)
+        [HttpGet("/api/DateTimeH/{startHour}/{endHour}/{sDay}")]
+        public List<string> GetDateTimeHour(string startHour, string endHour,string sDay)
         {
             this.conn.Open();
-            SqlCommand cmd = new SqlCommand("SELECT Data FROM Masuratori where Data = @thisDay order by Data", conn);
-            cmd.Parameters.AddWithValue("@thisDay", DateTime.Now.ToShortDateString());
+            SqlCommand cmd = new SqlCommand("SELECT CONVERT(varchar(15),CAST(Ora AS TIME),100) FROM Masuratori where Data = @thisDay and (Ora between @start and @end)" +
+                        " order by ora", conn);
+            cmd.Parameters.AddWithValue("@thisDay", sDay);
+            cmd.Parameters.AddWithValue("@start", startHour);
+            cmd.Parameters.AddWithValue("@end", endHour);
 
             using (SqlDataReader reader = cmd.ExecuteReader())
             {
@@ -422,8 +429,9 @@ namespace Proiect_SMP.Controllers
 
                 while (reader.Read())
                 {
-                    if (reader.GetDateTime(0).Hour > startHour.Hour && reader.GetDateTime(0).Hour < endHour.Hour)
-                        date.Add(reader.GetDateTime(0).Hour.ToString());
+                    //if (reader.GetDateTime(0).Hour > startHour.Hour && reader.GetDateTime(0).Hour < endHour.Hour)
+                        //date.Add(reader.GetTimeSpan(0).ToString());
+                        date.Add(reader.GetString(0));
                 }
 
                 return date;
@@ -437,13 +445,14 @@ namespace Proiect_SMP.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            SqlCommand cmd = new SqlCommand("INSERT INTO Masuratori VALUES (@gaz1, @gaz2, @gaz3, @data)", conn);
+            SqlCommand cmd = new SqlCommand("INSERT INTO Masuratori VALUES (@gaz1, @gaz2, @gaz3, @data, @ora)", conn);
 
             cmd.Parameters.AddWithValue("@gaz1", d.Gaz1);
             cmd.Parameters.AddWithValue("@gaz2", d.Gaz2);
             cmd.Parameters.AddWithValue("@gaz3", d.Gaz3);
-            cmd.Parameters.AddWithValue("@data", d.DataOra);
-            
+            cmd.Parameters.AddWithValue("@data", d.Date);
+            cmd.Parameters.AddWithValue("@ora", d.Ora);
+
 
             this.conn.Open();
             cmd.ExecuteNonQuery();

@@ -113,8 +113,14 @@ export class GraphComponent implements OnInit {
     }
 
     show() {
-        if (this.startDate == "" && this.endDate == "")
+        this.lineChartData2 = [];
+        this.lineChartLabels2 = [];
+
+
+        if (this.startDate == "" && this.endDate == "") {
             this.bool = false;
+            return
+        }
   //      console.log(this.startDate);
 //        console.log(this.endDate);
 

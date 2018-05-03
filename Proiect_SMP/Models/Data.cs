@@ -16,7 +16,8 @@ namespace Proiect_SMP.Models
             Gaz1 = Math.Round(reader.GetDouble(1),4);
             Gaz2 = reader.GetDouble(2);
             Gaz3 = reader.GetDouble(3);
-            DataOra = reader.GetDateTime(4);
+            Date = reader.GetDateTime(4);
+            Ora = reader.GetDateTime(5);
         }
 
         public Data()
@@ -24,14 +25,16 @@ namespace Proiect_SMP.Models
             Gaz1 = 0;
             Gaz2 = 0;
             Gaz3 = 0;
-            DataOra = DateTime.Now;
+            Date = DateTime.Now;
+            Ora = DateTime.Now;
         }
         public Data(Data d)
         {
             Gaz1 = d.Gaz1;
             Gaz2 = d.Gaz2;
             Gaz3 = d.Gaz3;
-            DataOra = d.DataOra;
+            Date = d.Date;
+            Ora = d.Ora;
         }
 
         public Data(string[] s)
@@ -39,8 +42,9 @@ namespace Proiect_SMP.Models
             Gaz1 = double.Parse(s[0]);
             Gaz2 = double.Parse(s[1]);
             Gaz3 = double.Parse(s[2]);
-            var st = s[3] + ' ' + s[4];
-            DataOra = DateTime.Parse(st);
+            //var st = s[3] + ' ' + s[4];
+            Date = DateTime.Parse(s[3]);
+            Ora = DateTime.Parse(s[4]);
             //DataOra = DateTime.ParseExact(st, "yyyy-MM-dd HH:mm:ss,fff", System.Globalization.CultureInfo.InvariantCulture);
         }
 
@@ -52,6 +56,8 @@ namespace Proiect_SMP.Models
 
         public double Gaz3 { get; set; }
 
-        public DateTime DataOra { get; set; }
+        public DateTime Date { get; set; }
+
+        public DateTime Ora { get; set; }
     }
 }

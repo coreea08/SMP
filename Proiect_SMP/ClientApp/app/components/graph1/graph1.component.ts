@@ -14,6 +14,7 @@ export class Graph1Component implements OnInit {
     gaz3: any[]
     public date: any[]
 
+    selectDay: any = new Date().toISOString().slice(0, 10);
     startDate: any
     endDate: any
     bool: boolean = false
@@ -97,31 +98,32 @@ export class Graph1Component implements OnInit {
     }
 
     show() {
+        this.lineChartData2 = [];
+        this.lineChartLabels2 = [];
+
         if (this.startDate == "" && this.endDate == "")
             this.bool = false;
 
         if (this.startDate == undefined || (this.startDate == "" && this.endDate != ""))
-            this.startDate = new Date().toISOString().slice(0, 10);
+            this.startDate = "00:00"
+       // console.log(this.startDate);
 
         if (this.endDate == undefined || (this.endDate == "" && this.startDate != ""))
-            this.endDate = new Date().toISOString().slice(0, 10);
+            this.endDate = "23:59"
 
-        let b = new Date(this.endDate);
-        let c = new Date(this.startDate)
-
-        if (b < c) {
+        if (this.startDate > this.endDate) {
             let a = this.startDate;
             this.startDate = this.endDate;
             this.endDate = a;
         }
 
-        this.dataService.getGaz1H(this.startDate, this.endDate).subscribe(x => {
+        this.dataService.getGaz1H(this.startDate, this.endDate, this.selectDay).subscribe(x => {
             this.gaz1 = x;
-            this.dataService.getGaz2H(this.startDate, this.endDate).subscribe(x1 => {
+            this.dataService.getGaz2H(this.startDate, this.endDate, this.selectDay).subscribe(x1 => {
                 this.gaz2 = x1;
-                this.dataService.getGaz3H(this.startDate, this.endDate).subscribe(x2 => {
+                this.dataService.getGaz3H(this.startDate, this.endDate, this.selectDay).subscribe(x2 => {
                     this.gaz3 = x2;
-                    this.dataService.getDateTimeH(this.startDate, this.endDate).subscribe(x3 => {
+                    this.dataService.getDateTimeH(this.startDate, this.endDate, this.selectDay).subscribe(x3 => {
                         this.lineChartData2 = [];
                         this.lineChartLabels2 = [];
                         this.lineChartData2.push({ data: this.gaz1, label: 'O2' });
