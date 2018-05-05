@@ -42,9 +42,12 @@ namespace Proiect_SMP.Models
             Gaz1 = double.Parse(s[0]);
             Gaz2 = double.Parse(s[1]);
             Gaz3 = double.Parse(s[2]);
-            //var st = s[3] + ' ' + s[4];
-            Date = DateTime.Parse(s[3]);
-            Ora = DateTime.Parse(s[4]);
+  //          Date = DateTime.Parse(s[3]);
+//            Ora = DateTime.Parse(s[4]);
+            Date = DateTime.Parse(DateTime.Now.ToShortDateString());
+            Ora = DateTime.Parse(DateTime.Now.ToShortTimeString());
+
+
             //DataOra = DateTime.ParseExact(st, "yyyy-MM-dd HH:mm:ss,fff", System.Globalization.CultureInfo.InvariantCulture);
         }
 

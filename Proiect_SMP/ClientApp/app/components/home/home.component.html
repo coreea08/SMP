@@ -118,20 +118,8 @@
                 </div>
                 <!-- /.row -->
                 <div class="row">
-                    <div class="col-xs-12 col-sm-8">
-                        <div class="panel panel-bd lobidrag">
-                            <div class="panel-heading">
-                                <div class="panel-title">
-                                    <h4>Google Map</h4>
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div class="google-maps">
-                                    <iframe src="https://maps.google.co.uk/maps?f=q&source=s_q&hl=en&geocode=&q=15+Springfield+Way,+Hythe,+CT21+5SH&aq=t&sll=52.8382,-2.327815&sspn=8.047465,13.666992&ie=UTF8&hq=&hnear=15+Springfield+Way,+Hythe+CT21+5SH,+United+Kingdom&t=m&z=14&ll=51.077429,1.121722&output=embed"></iframe>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <button class="btn-primary" (click)="open()">Open Serial Port</button>
+                    <button class="btn-primary" (click)="close()">Close Serial Port</button>
                 </div>
             </section>
             <!-- /.content -->

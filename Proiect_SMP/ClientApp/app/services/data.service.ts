@@ -7,6 +7,13 @@ export class DataService {
 
     constructor(private http: Http) { }
 
+    serialPort() {
+        return this.http.get('/api/SerialPort');
+    }
+    closeSerialPort() {
+        return this.http.get('/api/CloseSerialPort');
+    }
+
     //get all
     getData() {
         return this.http.get('/api/Data').map(res => res.json());

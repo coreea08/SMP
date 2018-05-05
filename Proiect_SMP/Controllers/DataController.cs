@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.IO;
+using System.IO.Ports;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
@@ -17,11 +19,54 @@ namespace Proiect_SMP.Controllers
     {
         public static string connectionString = "Server=OVIDIU-PC\\SQLEXPRESS;Database=SMP;Trusted_Connection=True;MultipleActiveResultSets=true";
         public SqlConnection conn;
+        public SerialPort mySerialPort;
 
         public DataController()
         {
             this.conn = new SqlConnection(connectionString);
+            this.mySerialPort = new SerialPort("COM3")
+            {
+                BaudRate = 9600,
+                Parity = Parity.None,
+                StopBits = StopBits.One,
+                DataBits = 8,
+                Handshake = Handshake.None
+            };
+            mySerialPort.DataReceived += SerialPortDataReceived;
         }
+
+        [HttpGet("/api/SerialPort")]
+        public IActionResult ReadSerialPort()
+        {
+            mySerialPort.Open();
+    
+            return Ok();
+        }
+
+        [HttpGet("/api/CloseSerialPort")]
+        public IActionResult CloseSerialPort()
+        {
+
+            mySerialPort.Close();
+
+            return Ok();
+        }
+
+        private void SerialPortDataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            var serialPort = (SerialPort)sender;
+
+            // Read the data that's in the serial buffer.
+            var serialdata = serialPort.ReadLine();
+
+            string[] str = serialdata.Split(null);
+            var d = new Data(str);
+            CreateData(d);
+
+            // Write to debug output.
+            Debug.Write(serialdata);
+        }
+
 
         [HttpPost("/api/Data1")]
         public IActionResult ReadFile([FromBody] Data d1)
